@@ -10,6 +10,19 @@
 </head>
 
 <body class="container">
+
+        <script>
+        // El mismo script para manejar el audio en esta página
+        const savedAudio = new Audio(localStorage.getItem('audioSrc'));
+        savedAudio.loop = true;
+        savedAudio.currentTime = parseFloat(localStorage.getItem('audioCurrentTime'));
+        savedAudio.play();
+
+        savedAudio.addEventListener('timeupdate', () => {
+            localStorage.setItem('audioCurrentTime', savedAudio.currentTime);
+        });
+    </script>
+    
     <div class="night"></div>
     <div class="flowers">
       <div class="flower flower--1">
