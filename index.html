@@ -36,16 +36,34 @@
         
     </div>
 
-        <script>
-        // Cargar el iframe del video solo si no existe ya
-        if (!localStorage.getItem('videoLoaded')) {
-            const iframe = document.createElement('iframe');
-            iframe.src = "https://www.youtube.com/embed/VIDEO_ID?autoplay=1&loop=1&playlist=W-PGNyhmSKA"; // Reemplaza VIDEO_ID con el ID del video
-            iframe.style.display = "none"; // Ocultar el video
-            document.body.appendChild(iframe);
+    <script>
+        // Crear o recuperar el elemento de audio
+        if (!localStorage.getItem('audioLoaded')) {
+            const audio = new Audio('audio/cancion.mp3'); // Reemplaza con la ruta correcta
+            audio.loop = true; // Activar el bucle
+            audio.play();
+            
+            // Guardar el estado del audio en localStorage
+            localStorage.setItem('audioLoaded', 'true');
+            localStorage.setItem('audioSrc', 'audio/your-audio-file.mp3');
+            localStorage.setItem('audioCurrentTime', audio.currentTime);
 
-            // Guardar en localStorage para saber que ya se ha cargado el video
-            localStorage.setItem('videoLoaded', 'true');
+            // Escuchar cambios en el tiempo de reproducción
+            audio.addEventListener('timeupdate', () => {
+                localStorage.setItem('audioCurrentTime', audio.currentTime);
+            });
+
+            // Guardar referencia del objeto de audio para otras páginas
+            localStorage.setItem('audioObject', JSON.stringify({
+                loop: audio.loop,
+                currentTime: audio.currentTime
+            }));
+        } else {
+            // Recuperar el audio guardado
+            const savedAudio = new Audio(localStorage.getItem('audioSrc'));
+            savedAudio.loop = true;
+            savedAudio.currentTime = parseFloat(localStorage.getItem('audioCurrentTime'));
+            savedAudio.play();
         }
     </script>
     
