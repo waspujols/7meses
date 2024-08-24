@@ -35,5 +35,19 @@
         </button>
         
     </div>
+
+        <script>
+        // Cargar el iframe del video solo si no existe ya
+        if (!localStorage.getItem('videoLoaded')) {
+            const iframe = document.createElement('iframe');
+            iframe.src = "https://www.youtube.com/embed/VIDEO_ID?autoplay=1&loop=1&playlist=W-PGNyhmSKA"; // Reemplaza VIDEO_ID con el ID del video
+            iframe.style.display = "none"; // Ocultar el video
+            document.body.appendChild(iframe);
+
+            // Guardar en localStorage para saber que ya se ha cargado el video
+            localStorage.setItem('videoLoaded', 'true');
+        }
+    </script>
+    
 </body>
 </html>
